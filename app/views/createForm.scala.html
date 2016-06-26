@@ -1,0 +1,23 @@
+@(gitProjectForm: Form[GitProject])
+
+@import helper._
+
+@main("Create git project") {
+
+    <h1>Add a gitProject</h1>
+    
+    @helper.form(routes.GitProjectController.cloneGit()) {
+        
+        <fieldset>
+            @helper.inputText(gitProjectForm("url"),
+                  '_label -> "Git project url",
+                  '_help -> "")
+        </fieldset>
+        
+        <div class="actions">
+            <input type="submit" value="Clone this git project" class="btn primary">
+        </div>
+        
+    }
+    
+}
