@@ -18,5 +18,9 @@ POST    /gitprojects                controllers.GitProjectController.cloneGit
 GET     /apps/new                   controllers.AppController.create
 POST    /apps                       controllers.AppController.save
 
+# Config controller
+GET     /configs/:appName           controllers.ConfigController.edit(appName:String)
+POST    /configs/:appName           controllers.ConfigController.update(appName:String)
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

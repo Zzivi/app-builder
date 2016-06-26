@@ -1,0 +1,31 @@
+@(appName: String, configForm: Form[Config])
+
+@import helper._
+
+@main("Edit App Config") {
+
+    <h1>Edit App Config</h1>
+    
+    @helper.form(routes.ConfigController.update(appName)) {
+        
+        <fieldset>
+            @helper.inputText(configForm("supportNum"),
+                  '_label -> "supportNum",
+                  '_help -> "")
+
+            @helper.inputText(configForm("driverNum"),
+                  '_label -> "driverNum",
+                  '_help -> "")
+
+            @helper.inputText(configForm("sslConnection"),
+                  '_label -> "sslConnection",
+                  '_help -> "")
+        </fieldset>
+        
+        <div class="actions">
+            <input type="submit" value="Edit the App" class="btn primary">
+        </div>
+        
+    }
+    
+}
