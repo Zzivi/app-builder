@@ -14,7 +14,9 @@ server.pid
 *.eml
 *.log
 .sbtserver/connections/*.log
+.sbtserver/connections/*.log.*
 .sbtserver/*.log
+.sbtserver/*.log.*
 /dist/
 .cache
 .idea/
