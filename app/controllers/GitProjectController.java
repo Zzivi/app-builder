@@ -6,6 +6,8 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.data.*;
 
+import javax.inject.Inject;
+
 
 import views.html.*;
 
@@ -16,19 +18,26 @@ import java.io.IOException;
  */
 public class GitProjectController extends Controller {
 
+    private FormFactory formFactory;
+
+    @Inject
+    public GitProjectController(FormFactory formFactory) {
+        this.formFactory = formFactory;
+    }
+
     public Result index() {
-        Form<GitProject> gitProjectForm = Form.form(GitProject.class);
+        Form<GitProject> gitProjectForm = formFactory.form(GitProject.class);
         return ok(views.html.createForm.render(gitProjectForm));
     }
 
     public Result cloneGit() throws IOException, GitAPIException {
-        Form<GitProject> gitProjectForm = Form.form(GitProject.class).bindFromRequest();
+        Form<GitProject> gitProjectForm = formFactory.form(GitProject.class).bindFromRequest();
         String url = gitProjectForm.get().getUrl();
 
         GitProject gitProject = new GitProject();
         gitProject.setUrl(url);
         gitProject.cloneRemoteRepository("develop");
-        
+
         return ok(index.render("Git project cloned: " + url ));
     }
 }
