@@ -14,5 +14,9 @@ GET     /message                    controllers.AsyncController.message
 GET     /gitprojects                controllers.GitProjectController.index
 POST    /gitprojects                controllers.GitProjectController.cloneGit
 
+# App controller
+GET     /apps/new                   controllers.AppController.create
+POST    /apps                       controllers.AppController.save
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

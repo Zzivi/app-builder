@@ -4,7 +4,8 @@ import models.GitProject;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import play.mvc.Controller;
 import play.mvc.Result;
-import play.data.*;
+import play.data.Form;
+import play.data.FormFactory;
 
 import javax.inject.Inject;
 

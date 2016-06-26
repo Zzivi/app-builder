@@ -1,0 +1,27 @@
+@(appForm: Form[App])
+
+@import helper._
+
+@main("Create new App") {
+
+    <h1>Create a new App</h1>
+    
+    @helper.form(routes.AppController.save()) {
+        
+        <fieldset>
+            @helper.inputText(appForm("name"),
+                  '_label -> "app name",
+                  '_help -> "")
+
+            @helper.inputText(appForm("id"),
+                  '_label -> "app id",
+                  '_help -> "")
+        </fieldset>
+        
+        <div class="actions">
+            <input type="submit" value="Create the App" class="btn primary">
+        </div>
+        
+    }
+    
+}
