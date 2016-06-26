@@ -16,8 +16,13 @@ public class GitProject {
 
     private String url;
 
-    private Git gitProject;
     private File localPath;
+
+    private Git gitProject;
+
+    public File getLocalPath() {
+        return localPath;
+    }
 
     public String getUrl() {
         return url;
