@@ -34,13 +34,12 @@ public class AppController extends Controller {
 
     public Result save() throws IOException, GitAPIException {
         Form<App> appForm = formFactory.form(App.class).bindFromRequest();
+        String name = appForm.get().getName();
+        String id = appForm.get().getId();
 
         GitProject gitProject = new GitProject();
         gitProject.setUrl(GIT_REPO_URL);
         gitProject.cloneRemoteRepository("develop");
-
-        String name = appForm.get().getName();
-        String id = appForm.get().getId();
 
         App app = new App();
         app.setId(id);
