@@ -1,5 +1,6 @@
 package models;
 
+import org.eclipse.jgit.api.CommitCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 
@@ -44,4 +45,12 @@ public class GitProject {
 
         System.out.println("Having repository: " + gitProject.getRepository().getDirectory());
     }
+
+    public void addCommitPush(String nameFileToAdd, String message) throws IOException, GitAPIException {
+		System.out.println("git add file: " + nameFileToAdd);
+        gitProject.add().addFilepattern(nameFileToAdd).call();
+        CommitCommand commit = gitProject.commit();
+        commit.setMessage(message).call();
+		gitProject.push().call();
+	}
 }
