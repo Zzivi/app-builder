@@ -5,12 +5,15 @@ bin/
 /lib/
 /logs/
 /modules
+/project/project
 /project/target
 /target
 tmp/
 test-result
 server.pid
 *.eml
+*.log
+.sbtserver/connections/*.log
 /dist/
 .cache
 .idea/
