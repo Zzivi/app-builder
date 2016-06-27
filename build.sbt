@@ -1,3 +1,5 @@
+import sbt._
+
 name := """app-builder"""
 
 version := "1.0-SNAPSHOT"
@@ -12,7 +14,8 @@ libraryDependencies ++= Seq(
   javaWs,
   "org.eclipse.jgit" % "org.eclipse.jgit" % "4.4.0.201606070830-r",
   // https://adrianhurt.github.io/play-bootstrap/
-  "com.adrianhurt" %% "play-bootstrap" % "1.0-P25-B3"
+  "com.adrianhurt" %% "play-bootstrap" % "1.0-P25-B3",
+  "com.google.code.gson" % "gson" % "2.2.4"
 )
 
 
