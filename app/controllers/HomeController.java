@@ -1,14 +1,18 @@
 package controllers;
 
+import org.eclipse.jgit.api.errors.GitAPIException;
 import play.mvc.*;
 
 import views.html.home;
+
+import java.io.IOException;
 
 /**
  * This controller contains an action to handle HTTP requests
  * to the application's home page.
  */
 public class HomeController extends Controller {
+
 
     /**
      * An action that renders an HTML page with a welcome message.

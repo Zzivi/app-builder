@@ -79,12 +79,11 @@ public class App {
         output.close();
     }
 
-    public List<App> readExistingApps() throws IOException, GitAPIException {
-        GitProject gitProject = new GitProject();
-        gitProject.setUrl(GIT_REPO_URL);
-        gitProject.cloneRemoteRepository("develop");
 
-        String fileContent = readFile(gitProject.getLocalPath().getPath(), "//signingConfigs start", "//signingConfigs end");
+
+
+    public List<App> readExistingApps(String path) throws IOException, GitAPIException {
+        String fileContent = readFile(path, "//signingConfigs start", "//signingConfigs end");
         return processFile(fileContent);
 
     }

@@ -7,23 +7,17 @@ import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.Result;
-import play.twirl.api.Content;
 import views.html.createFormApp;
 import views.html.index;
 
 import javax.inject.Inject;
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by dgarcia on 26/06/2016.
  */
 public class AppController extends Controller {
-
-    private static final String GIT_REPO_URL = "git@github.com:Zzivi/autoapp.git";
 
     private FormFactory formFactory;
 
@@ -32,23 +26,24 @@ public class AppController extends Controller {
         this.formFactory = formFactory;
     }
 
+    @Inject
+    GitProject gitProject;
+
     public Result create() {
         Form<App> appForm = formFactory.form(App.class);
         return ok(createFormApp.render(appForm));
     }
 
     public Result save() throws IOException, GitAPIException {
+
         Form<App> appForm = formFactory.form(App.class).bindFromRequest();
+
         String name = appForm.get().getName();
         String id = appForm.get().getId();
         String password = appForm.get().getPassword();
         String vMajor = appForm.get().getvMajor();
         String vMinor = appForm.get().getvMinor();
         String vMinorMinor = appForm.get().getvMinorMinor();
-
-        GitProject gitProject = new GitProject();
-        gitProject.setUrl(GIT_REPO_URL);
-        gitProject.cloneRemoteRepository("develop");
 
         App app = new App();
         app.setId(id);
@@ -57,6 +52,7 @@ public class AppController extends Controller {
         app.setvMajor(vMajor);
         app.setvMinor(vMinor);
         app.setvMinorMinor(vMinorMinor);
+
         app.adaptAppFile(name, id, password, vMajor, vMinor, vMinorMinor, gitProject.getLocalPath());
 
         gitProject.addCommitPush(App.APP_FILE_TO_ADAPT, "New app: " + name);
@@ -64,24 +60,10 @@ public class AppController extends Controller {
         return ok(index.render("App created: " + name ));
     }
 
-    public Result list() {
-        List<App> apps = new ArrayList<App>();
-        App app1 = new App();
-        app1.setName("icabbi");
-        apps.add(app1);
-
-        App app2 = new App();
-        app2.setName("acorn");
-        apps.add(app2);
-
-        
-//        App app = new App();
-//        List<App> apps = app.readExistingApps();
+    public Result list() throws IOException, GitAPIException {
+        App app = new App();
+        List<App> apps = app.readExistingApps(gitProject.getLocalPath().getPath() + "/app/build.gradle");
         return ok(views.html.applist.render("Apps ", apps));
     }
-
-
-
-
 
 }

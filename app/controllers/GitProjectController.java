@@ -33,12 +33,7 @@ public class GitProjectController extends Controller {
 
     public Result cloneGit() throws IOException, GitAPIException {
         Form<GitProject> gitProjectForm = formFactory.form(GitProject.class).bindFromRequest();
-        String url = gitProjectForm.get().getUrl();
-
         GitProject gitProject = new GitProject();
-        gitProject.setUrl(url);
-        gitProject.cloneRemoteRepository("develop");
-
-        return ok(index.render("Git project cloned: " + url ));
+        return ok(index.render("Git project cloned: " ));
     }
 }
