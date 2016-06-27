@@ -36,6 +36,10 @@ public class AppController extends Controller {
         Form<App> appForm = formFactory.form(App.class).bindFromRequest();
         String name = appForm.get().getName();
         String id = appForm.get().getId();
+        String password = appForm.get().getPassword();
+        String vMajor = appForm.get().getvMajor();
+        String vMinor = appForm.get().getvMinor();
+        String vMinorMinor = appForm.get().getvMinorMinor();
 
         GitProject gitProject = new GitProject();
         gitProject.setUrl(GIT_REPO_URL);
@@ -44,7 +48,11 @@ public class AppController extends Controller {
         App app = new App();
         app.setId(id);
         app.setName(name);
-        app.adaptAppFile(name, id, gitProject.getLocalPath());
+        app.setPassword(password);
+        app.setvMajor(vMajor);
+        app.setvMinor(vMinor);
+        app.setvMinorMinor(vMinorMinor);
+        app.adaptAppFile(name, id, password, vMajor, vMinor, vMinorMinor, gitProject.getLocalPath());
 
         gitProject.addCommitPush(App.APP_FILE_TO_ADAPT, "New app: " + name);
 

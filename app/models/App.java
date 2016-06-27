@@ -11,6 +11,10 @@ public class App {
 
     private String name;
     private String id;
+    private String password;
+    private String vMajor;
+    private String vMinor;
+    private String vMinorMinor;
 
     public String getName() {
         return name;
@@ -28,11 +32,45 @@ public class App {
         this.id = id;
     }
 
-    public void adaptAppFile(String name, String id, File rootPath) throws IOException {
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getvMajor() {
+        return vMajor;
+    }
+
+    public void setvMajor(String vMajor) {
+        this.vMajor = vMajor;
+    }
+
+    public String getvMinor() {
+        return vMinor;
+    }
+
+    public void setvMinor(String vMinor) {
+        this.vMinor = vMinor;
+    }
+
+    public String getvMinorMinor() {
+        return vMinorMinor;
+    }
+
+    public void setvMinorMinor(String vMinorMinor) {
+        this.vMinorMinor = vMinorMinor;
+    }
+
+    public void adaptAppFile(String name, String id, String password, String vMajor, String vMinor, String vMinorMinor, File rootPath) throws IOException {
         Writer output;
         output = new BufferedWriter(new FileWriter(rootPath + "/" + APP_FILE_TO_ADAPT, true));
         output.append("Name: " + name);
         output.append("Id: " + id);
+        output.append("Password: " + password);
+        output.append("Version: " + vMajor + "." + vMinor + "." + vMinorMinor);
         output.close();
     }
 }
