@@ -2,7 +2,7 @@
  * This template takes a single argument, a String containing a
  * message to display.
  *@
-@(message: String)
+@(message: String, apps: List[models.App])
 
 @*
  * Call the `main` template with two arguments. The first
@@ -15,15 +15,9 @@
         <h1>@message</h1>
     </div>
 
-    <div class="well">
-        <a href='@routes.AppController.create()'>Create new app</a>
-    </div>
-
-    <div class="well">
-        <a href='@routes.ConfigController.edit("randomApp")'>Edit config app</a>
-    </div>
-
-    <div class="well">
-        <a href='@routes.AppController.list()'>See Existing Apps</a>
-    </div>
+    <ul>
+    @for(app <- apps) {
+        <li>@app.getName()</li>
+    }
+    </ul>
 }

@@ -1,6 +1,10 @@
 package models;
 
+import org.eclipse.jgit.api.errors.GitAPIException;
+
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by dgarcia on 26/06/2016.
@@ -8,6 +12,7 @@ import java.io.*;
 public class App {
 
     public static final String APP_FILE_TO_ADAPT = "app/build.gradle";
+    private static final String GIT_REPO_URL = "git@github.com:Zzivi/autoapp.git";
 
     private String name;
     private String id;
@@ -72,5 +77,47 @@ public class App {
         output.append("Password: " + password);
         output.append("Version: " + vMajor + "." + vMinor + "." + vMinorMinor);
         output.close();
+    }
+
+    public List<App> readExistingApps() throws IOException, GitAPIException {
+        GitProject gitProject = new GitProject();
+        gitProject.setUrl(GIT_REPO_URL);
+        gitProject.cloneRemoteRepository("develop");
+
+        String fileContent = readFile(gitProject.getLocalPath().getPath(), "//signingConfigs start", "//signingConfigs end");
+        return processFile(fileContent);
+
+    }
+
+    private static String readFile(String filePath, String startCondition, String exitCondition) throws IOException{
+        StringBuilder sb = new StringBuilder();
+        BufferedReader br = new BufferedReader(new FileReader(filePath));
+
+        String line = br.readLine();
+        while (line != null && !line.contains(startCondition)) {
+            line = br.readLine();
+        }
+        while (line != null && !line.contains(exitCondition)) {
+            sb.append(line);
+            sb.append(System.lineSeparator());
+            line = br.readLine();
+        }
+        br.close();
+        return sb.toString();
+    }
+
+    private static List<App> processFile(String fileContent){
+        List<App> names = new ArrayList<App>();
+        String[] chunks = fileContent.split("}");
+        for(String chunk : chunks){
+            int index = chunk.indexOf("{") > -1 ? chunk.indexOf("{") : 0;
+            String name = chunk.trim().substring(0, index);
+            if(!name.contains("signingConfigs")) {
+                App app = new App();
+                app.setName(name);
+                names.add(app);
+            }
+        }
+        return names;
     }
 }

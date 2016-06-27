@@ -16,6 +16,7 @@ POST    /gitprojects                controllers.GitProjectController.cloneGit
 
 # App controller
 GET     /apps/new                   controllers.AppController.create
+GET     /apps                       controllers.AppController.list
 POST    /apps                       controllers.AppController.save
 
 # Config controller

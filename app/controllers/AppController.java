@@ -7,11 +7,16 @@ import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.twirl.api.Content;
 import views.html.createFormApp;
 import views.html.index;
 
 import javax.inject.Inject;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by dgarcia on 26/06/2016.
@@ -58,4 +63,25 @@ public class AppController extends Controller {
 
         return ok(index.render("App created: " + name ));
     }
+
+    public Result list() {
+        List<App> apps = new ArrayList<App>();
+        App app1 = new App();
+        app1.setName("icabbi");
+        apps.add(app1);
+
+        App app2 = new App();
+        app2.setName("acorn");
+        apps.add(app2);
+
+        
+//        App app = new App();
+//        List<App> apps = app.readExistingApps();
+        return ok(views.html.applist.render("Apps ", apps));
+    }
+
+
+
+
+
 }
