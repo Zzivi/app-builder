@@ -12,7 +12,6 @@ import java.util.List;
 public class App {
 
     public static final String APP_FILE_TO_ADAPT = "app/build.gradle";
-    private static final String GIT_REPO_URL = "git@github.com:Zzivi/autoapp.git";
 
     private String name;
     private String id;
@@ -78,9 +77,6 @@ public class App {
         output.append("Version: " + vMajor + "." + vMinor + "." + vMinorMinor);
         output.close();
     }
-
-
-
 
     public List<App> readExistingApps(String path) throws IOException, GitAPIException {
         String fileContent = readFile(path, "//signingConfigs start", "//signingConfigs end");
