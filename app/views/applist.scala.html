@@ -17,7 +17,11 @@
 
     <ul>
     @for(app <- apps) {
-        <li>@app.getName()</li>
+        <li><div class="well">
+            <a href='@routes.ConfigController.edit(app.getName)'>@app.getName</a>
+        </div></li>
     }
     </ul>
+
+
 }
